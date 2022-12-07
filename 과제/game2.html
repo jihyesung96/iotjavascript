@@ -16,15 +16,20 @@
           outline: none;
         }
         .startBtn { padding: 5px 12px;}
+        div{
+          margin: 30px 0;
+        }
     </style>
 </head>
 <body>
-    <div style="margin: 30px 0;">
+    <div>
         <button class="startBtn" onclick="startGame(0)">Game1</button>  
         <button class="startBtn" onclick="startGame(1)">Game2</button>
+        <button class="startBtn" onclick="startGame(2)">Game3</button>  
+        <button class="startBtn" onclick="startGame(3)">Game4</button>
       </div>
       
-      <div style="margin: 30px 0;">
+      <div>
         <canvas id="myCanvas" width="500" height="500" tabindex="-1"></canvas>
       </div>
       
@@ -186,9 +191,9 @@
           }
         }
       }
-      
+      //키 객체
       var keys = { left: false, right: false };
-      
+      //방향키 이동 이벤트 함수
       canvas.addEventListener("keydown", function(ev) {
         if (ev.code == "ArrowLeft") keys.left = true;
         if (ev.code == "ArrowRight") keys.right = true;
@@ -203,10 +208,12 @@
       
       class Game {
         constructor(no) {
-          var ballSpeeds = [6, 7];
+          var ballSpeeds = [6, 7, 8, 9];
           var brickSettings = [
             [3, 5, 0, 50, WIDTH, 150, COLOR],
-            [7, 10, 0, 50, WIDTH, 150, COLOR]
+            [5, 7, 0, 50, WIDTH, 150, COLOR],
+            [7, 9, 0, 50, WIDTH, 150, COLOR],
+            [9, 11, 0, 50, WIDTH, 150, COLOR]
           ];
       
           this.state = "start";
@@ -249,7 +256,7 @@
           this.ball.draw(ctx);
         }
       }
-      
+      //글자 모양 함수
       function drawText(text) {
         ctx.font = "bold 70px arial";
         ctx.fillStyle = "dodgerblue";
@@ -259,7 +266,7 @@
       }
       
       var game = null;
-      
+      //게임 결고 함수
       function mainLoop() {
         requestAnimationFrame(mainLoop);
       

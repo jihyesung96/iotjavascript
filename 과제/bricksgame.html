@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            max-width: 900px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        #myCanvas {
+          border: 3px solid lightgray;
+          box-sizing: border-box;
+          max-width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div>
+    <canvas id="myCanvas" width="800" height="400"></canvas>
+    </div>
+    <div>
+    <button class="startBtn" onclick="startGame()">start</button>  
+    </div>
+
+    <script>
+        const canvas = document.querySelector("#myCanvas")
+        const ctx = canvas.getContext("2d")
+        let WIDTH = canvas.width;
+        let HEIGHT = canvas.height-100;
+        let BALL_RADIUS = 10;
+        let COLOR = "green";
+        let timer = 0;
+
+
+        //공 만들기
+        // class ball{
+        //     constructor(x, y, radius, speed, angle, color){
+        //         this.x = x;
+        //         this.y = y;
+        //         this.radius = radius;
+        //         this.speed = speed;
+        //         this.setangle(angle);
+        //         this.color = color;
+        //     }
+        //     moveLeft(wallLeft) {
+        //     this.x -= this.speed;
+        //     if (this.x < wallLeft) this.x = wallLeft;
+        //     }
+        //     moveRight(wallRight) {
+        //     this.x += this.speed;
+        //     if (this.x + this.width > wallRight) this.x = wallRight - this.width;
+        //     }
+
+        //     draw(){
+        //     ctx.beginPath();
+        //     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        //     ctx.fillStyle = this.color;
+        //     ctx.fill(); 
+        //     ctx.closePath();
+        //     }
+        // }
+        //발판 배열
+        let boxes = [];
+        //발판 클래스
+        class Box {
+            constructor(index, y){ //생성자 함수
+                this.index = index;
+                this.x = 800;
+                this.y = 150+(Math.random()*HEIGHT * 0.5);
+                this.width = 100;
+                this.height = 20; 
+                this.draw();
+            }
+            draw(){
+                //면색변경
+                ctx.fillStyle = "green";
+                //사각형 그리기
+                ctx.fillRect(this.x,this.y,this.width,this.height);
+            }
+        }
+    
+        function startFrame(){
+            timer++;
+            //캔버스 지우기
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            //1초에 60번
+            animation = requestAnimationFrame(startFrame);
+            //timer가 180 증가 될때 마다 장애물을 생성
+            //장애물 배열에 넣기
+            if(timer % 180 == 0){
+                let obs = new Box();
+                boxes.push(obs)
+            }
+            boxes.forEach((item , index, arr)=>{
+                //왼쪽으로 장애물을 이동하다가
+                //x좌표가 0보다 작으면 배열에서 제거
+                if(item.x<-100){
+                    arr.splice(index,1)
+                }
+                item.x--;
+                item.draw();
+                //충돌하는지 확인
+                // crachCheck(gameU, item)
+            })
+            // ball.draw();
+        }
+        startFrame();
+        //방향키 이동 이벤트 함수
+        canvas.addEventListener("keydown", function(e) {
+            if (e.code == "ArrowLeft") keys.left = true;
+            if (e.code == "ArrowRight") keys.right = true;
+            if (e.code != "F5") ev.preventDefault();
+        });
+    
+        canvas.addEventListener("keyup", function(e) {
+            if (e.code == "ArrowLeft") keys.left = false;
+            if (e.code == "ArrowRight") keys.right = false;
+            if (e.code != "F5") ev.preventDefault();
+        })
+            
+    </script>
+</body>
+</html>

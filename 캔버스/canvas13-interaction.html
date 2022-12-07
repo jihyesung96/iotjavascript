@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        canvas{
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <h1>Interaction</h1>
+    <canvas id="canvas" width="600" height="400"></canvas>
+    <script>
+        const canvas =document.querySelector("#canvas")
+        const context = canvas.getContext("2d")
+        let boxes = [];
+        //글자 두께 크기 서체 지정
+        context.font = "bold 24px sans-serif";
+        class Box {
+            constructor(index, x, y, speed){ //생성자 함수
+                this.index = index;
+                this.x = x;
+                this.y = y;
+                this.speed = speed;
+                this.width = 100;
+                this.height = 100; 
+                this.draw();
+            }
+            draw(){
+                //면색변경
+                context.fillStyle = "rgba(0,0,0,0.5)";
+                //사각형 그리기
+                context.fillRect(this.x,this.y,this.width,this.height);
+                //글자색 변경
+                context.fillStyle = "#fff";
+                //글자 작성 fillText("내용",x,y)
+                context.fillText(this.index, this.x+40, this.y+40);
+            }
+        }
+        //box 객체 생성해서 배열에 넣기
+        let tempX, tempY, tempSpeed;
+        for(let i=0; i<10; i++){
+            //speed는 1~5 랜덤숫자
+            //Math.random() 0 <= random < 1 
+            //0 <= random <5 => 0~4
+            tempSpeed = Math.floor(Math.random()*5) +1;
+            tempX = Math.random()*canvas.width * 0.8;
+            tempY = Math.random()*canvas.width * 0.8; 
+            boxes.push(new Box(i, tempX, tempY, tempSpeed));
+        }
+        //box이동 시키기
+        function boxMove(){
+            context.clearRect(0,0,canvas.width,canvas.height);
+            boxes.forEach(box =>{
+                box.x += box.speed;
+                if(box.x > canvas.width){
+                    box.x = -box.x;
+                }
+                box.draw();
+            })
+            requestAnimationFrame(boxMove)
+        }
+        boxMove();
+        canvas.addEventListener("click", (e)=>{
+            let mousePosX = e.layerX;
+            let mousePosY = e.layerY;
+            boxes.forEach(box => {
+                if(mousePosX >= box.x 
+                && mousePosX < box.x+100
+                && mousePosY-86 >= box.y 
+                && mousePosY-86 < box.y+100){
+                    console.log(box.index)
+                }
+            })
+        })
+    </script>
+</body>
+</html>
