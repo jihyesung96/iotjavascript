@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas id="my_canvas" width="600" height="400">
+        이 브라우져는 Canvas가 지원되지 않습니다
+     </canvas>
+     <hr>
+     프로그램 시작/중지 : <input type="button" value="Start" id="bt_start" onclick="start_stop();"><br>
+     공의 방향제어버튼  : <input type="button" value="left"    onclick="bRight=false;">
+                          <input type="button" value="right" onclick="bRight=true;">
+                          <input type="button" value="up"    onclick="bDown=false;">
+                          <input type="button" value="down"    onclick="bDown=true;">  
+      
+      
+                          <br>
+     공의 크기제어버튼  :  <input type="button" value="+" onclick="ball_size_plus();">
+                           <input type="button" value="-" onclick="ball_size_minus();">    
+      
+    <script type="text/javascript">
+ 
+        var ball_x, ball_y, ball_radius;
+        var bRight = true;//이동방향
+        var bDown = true;
+         
+        //화면크기
+        var WIDTH = 600;
+        var HEIGHT = 400;
+         
+        var ctx;//cavas에 그릴 그리기 context담을 변수(cf: java Graphics와 유사)
+         
+        //시간
+        var timer = null;
+         
+        //블럭배열생성
+        var block_array = new Array();
+        var block_w=100; //블럭폭
+        var block_h=40;  //블럭높이
+         
+        var count=5;
+         
+        var back_img;//배경이미지
+         
+        //바 크기
+        var bar_w = 80;
+        var bar_h = 5;
+        //마우스 좌표
+        var mouse_x;
+        var mouse_y;
+        // 바 크기
+        var mouse_bs;
+        var mouse_be;
+        var y_radius = 5;
+         
+        var speed = 30;
+         
+         
+        /* 현재 html문서가 로드가 완료되면 호출되는 이벤트 */
+        function Block(x,y,w,h,show,color){
+           //멤버변수
+           this.x = x;
+           this.y = y;
+           this.w = w;
+           this.h = h;
+           this.show = show;
+           this.color= color;
+        }
+         
+         
+        //익명함수 
+        window.onload = function() {
+            var canvas = document.getElementById("my_canvas");
+            
+            //이미지 로드
+            back_img = new Image();
+            back_img.src = "1.jpg";
+         
+            
+            //공의 좌표 및 크기
+            ball_x = WIDTH / 2;
+            ball_y = HEIGHT / 2;
+            ball_radius = 10;
+            //그리기 컨텍스트 획득
+            ctx = canvas.getContext("2d");
+         
+            ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+            ctx.fillRect(0, 0, WIDTH, HEIGHT);
+            
+            //벽돌초기화
+            init_block();
+        };
+         
+        //################ 8. 벽돌초기화
+        function init_block(){
+           var colors = [ "red","green","blue","yellow","cyan","magenta","pink" ];
+           var index = 0;
+           for(var i=0;i<4;i++){ //행좌표(y)
+              var block_arr = new Array();//1차원배열
+              for(var k=0;k<6;k++){ //열좌표(x)
+                 var block = new Block(k*block_w, i*block_h, block_w, block_h, true, colors[index]);
+                 //if((i+k)%2==0)block.show=false;
+                  block_arr[k] = block;
+                  
+                  index++;
+                  if(index>6)index=0;
+              }
+              //2차원배열 설정
+              block_array[i] = block_arr;//1차원배열을 다른배열에 넣으면(2차원)
+           }
+        }
+         
+        //################ 9. 마우스가 클릭되면
+        window.onmousedown = function(event){
+           //클릭된 좌표
+           var x = event.offsetX;
+           var y = event.offsetY;
+           
+           console.log("(" + x + "," + y + ")" ); 
+        };
+         
+        //################ 1. 볼그리기
+        function draw_ball(){
+           var radgrad = ctx.createRadialGradient(ball_x,ball_y,0,ball_x-5,ball_y-5,ball_radius);   
+           radgrad.addColorStop(0, 'white');     
+           radgrad.addColorStop(1, '#000000');   
+           ctx.fillStyle = radgrad;    
+           ctx.beginPath();
+           ctx.arc(ball_x,ball_y,ball_radius,0,Math.PI/180 * 360,  true);
+           ctx.fill();
+        }
+         
+        //################ 2. 볼 움직이기
+        function move_ball(){
+         //좌우이동
+         if(bRight)
+             ball_x += 5;
+         else
+            ball_x -= 5;
+         
+         if( (ball_x + ball_radius) > WIDTH ) //오른쪽벽에 닿았으면
+            bRight = false;
+         
+         if((ball_x - ball_radius) < 0 ) //왼쪽벽에 닿았으면
+             bRight = true;
+         
+         //상하이동
+         if(bDown)
+            ball_y += 5;
+         else
+            ball_y -= 5;
+         
+         //윗쪽벽 충돌
+         if( (ball_y-ball_radius) < 0 )
+            bDown=true;
+         
+         //아랫쪽벽 충돌
+         if( (ball_y+ball_radius) > HEIGHT)
+            bDown=false;
+        }
+         
+        //################ 3. 블럭그리기
+        function draw_block(){
+           for(var i=0;i< block_array.length;i++){ // i = 0 1 2 3
+              for(var k=0;k<block_array[i].length;k++){ // k = 0 1 2 3 4 5
+                 var block = block_array[i][k];
+                  if(block.show==true){//깨지지 않았으면 보여줘라 
+                     //블럭그리기
+                     ctx.fillStyle = block.color;
+                     ctx.fillRect(block.x-1,block.y-1,block.w-2,block.h-2);
+                  }
+              }
+           }
+        }
+         
+         
+        //################ 4. 그리기
+        function draw(){
+            //배경이미지
+            //                       sx,sy,sw,sh(이미지)   dx,dy,dw, dh(화면)
+            ctx.drawImage(back_img,0,0,550,359,        0,0,WIDTH,HEIGHT);
+         
+              //볼럭 그리기
+              draw_block();
+         
+              //볼그리기
+              draw_ball();
+        }
+         
+        //################ 5. 시작, 중지
+        function start_stop(){
+           if(timer==null)
+              start_timer(); //시작함수
+           else
+              stop_timer(); //증지함수
+           
+           //버튼캡션 변경
+           document.getElementById("bt_start").value=(timer==null) ? "Start" : "Stop";
+        }
+         
+        function ball_size_plus(){
+           ball_radius += 5;
+           if(ball_radius > 100)ball_radius = 100;
+        }
+         
+        function ball_size_minus(){
+           ball_radius -= 5;
+           if(ball_radius < 15)ball_radius = 15;
+        }
+         
+            
+        //################ 6. 시작함수
+        function start_timer(){
+            if(timer==null)
+                timer = setInterval("process();",10);  //지속적으로 호출
+        }
+         
+        //################ 7. 증지함수
+        function stop_timer(){
+            clearInterval(timer);//타이머 중지
+            timer=null;
+        }
+         
+        //################ 8. 프로세스
+        function process(){
+            //공의 위치변경
+            move_ball();
+           
+            //이거 없으면 안됨
+            //다시 그려라
+            draw();   
+            
+            //충돌체크
+            collision_ball_and_block();
+              
+        }
+         
+        //################ 9. 충돌체크
+        function collision_ball_and_block(){
+           //공이 블럭범위 아래 있으면 충돌체크 하지 말아라
+           if((ball_y-ball_radius) >= (block_array.length*block_h) )return;
+           
+           //공이 윗쪽으로 이동시
+           if(bDown==false)
+              collision_ball_top();
+           if(bDown==true)
+              collision_ball_down();
+           if(bRight==false)
+              collision_ball_left();
+           if(bRight==true)
+              collision_ball_right();
+        }
+         
+        //################ 9. 공이 윗쪽으로 이동시 
+        function collision_ball_top() {
+            //공의 충돌위치 구하기
+            var x = ball_x;
+            var y = ball_y - ball_radius;
+            
+            //행/열 구하기
+            var row = Math.floor(y/block_h);
+            var col = Math.floor(x/block_w);
+            
+            var rows = block_array.length;        //행수
+            var cols = block_array[0].length;    //열수
+            
+            //행 열의 유효범위 체크
+            if(row<0 || row>rows) return;
+            if(col<0 || col>cols) return;
+            
+            var block = block_array[row][col];
+            //이미 깨진 블럭
+            if(block.show == false) return;
+            
+            //블럭깸
+            block.show = false;
+            
+            //공의 방향 아래로 전환
+            bDown = true;
+        }
+         
+        //################ 10. 공이 아래쪽으로 이동시 
+        function collision_ball_down(){
+           //공의 충돌위치 구하기
+           var x = ball_x ;
+           var y = ball_y+ball_radius;
+           
+           //행/열 구하기
+           var row = Math.floor(y/block_h);
+           var col = Math.floor(x/block_w);
+           
+           var rows = block_array.length;   //행수
+           var cols = block_array[0].length;//열수
+           
+           //행열의 유효범위 체크
+           if(row< 0 || row >= rows) return;
+           if(col<0 || col >= cols) return;
+           
+           var block = block_array[row][col];
+            //이미 깨진 블럭
+           if(block.show==false)return;
+            
+            //블럭깸
+            block.show=false;
+            
+            //공의 방향 아래로 전환
+            bDown=false;
+        }
+         
+        //################ 11. 공이 왼쪽으로 이동시 
+        function collision_ball_left(){
+           //공의 충돌위치 구하기
+           var x = ball_x-ball_radius;
+           var y = ball_y;
+           
+           //행/열 구하기
+           var row = Math.floor(y/block_h);
+           var col = Math.floor(x/block_w);
+           
+           var rows = block_array.length;   //행수
+           var cols = block_array[0].length;//열수
+           
+           //행열의 유효범위 체크
+           if(row< 0 || row >= rows) return;
+           if(col<0 || col >= cols) return;
+           
+           var block = block_array[row][col];
+            //이미 깨진 블럭
+           if(block.show==false)return;
+            
+            //블럭깸
+            block.show=false;
+            
+            //공의 방향 아래로 전환
+            bRight=true;
+        }
+         
+        //################ 12. 공이 오른쪽으로 이동시 
+        function collision_ball_right(){
+           //공의 충돌위치 구하기
+           var x = ball_x+ball_radius;
+           var y = ball_y;
+           
+           //행/열 구하기
+           var row = Math.floor(y/block_h);
+           var col = Math.floor(x/block_w);
+           
+           var rows = block_array.length;   //행수
+           var cols = block_array[0].length;//열수
+           
+           //행열의 유효범위 체크
+           if(row< 0 || row >= rows) return;
+           if(col<0 || col >= cols) return;
+           
+           var block = block_array[row][col];
+            //이미 깨진 블럭
+           if(block.show==false)return;
+            
+            //블럭깸
+            block.show=false;
+            
+            //공의 방향 아래로 전환
+            bRight=false;
+        }
+        </script>
+</body>
+</html>

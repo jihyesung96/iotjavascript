@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //함수 선언문 방식    
+        //함수선언문은 자체적으로 호이스팅이 된다
+        //함수 정의하기전에 호출이 가능
+        // function 함수명 (매개변수){
+        //     return 반환값;
+        // }
+        let result = add(2,3);
+        function add (a,b){
+            return a + b;
+        }
+        // console.log(add(2,5));
+        // console.log(result);
+        function printText(text){
+            return 0; //return을 만나면 함수는 끝이남 아래에 더있더라고 실행이 되지 않는다.
+            console.log(text);
+            //return undefined; 자체적으러 넣어줌
+        }
+        let result2 = printText("월요일 싫어요!");
+        console.log(result2);
+
+        //함수 표현식은 호이스팅이 되지 않는다
+        let add2 = function(a,b){
+            return a+b;
+        }
+        console.log(add2(5,10));
+
+        //매개변수 기본값 설정
+        // 전달하지 않은 매개변수의 디폴트 값을 설정할수 있다
+        function showMessage(message, form = "그린"){
+            console.log(`메세지는 ${message}이고 , 보낸사람은 ${form}이다.`);
+        }
+        showMessage("야호","영희");
+        showMessage("자바스크립트","철수");
+        showMessage("인수1","인수2");
+        showMessage("멍청이");
+
+        //나머지 매개변수 (es6때추가)
+        // 배열형로 전달할수 있음
+        function printAll(...arr){
+            // for (let i = 0 ; i<arr.length ; i++){
+            //     console.log(arr[i]);
+            // }
+            arr.forEach(i=>{
+                console.log(i)
+            })
+        }
+        printAll('원빈','김희선','송중기');
+        printAll('강하늘','김희선');
+
+        //화살표 함수 -> 무기명 함수를 간략하게 작성
+        let add3 = function(a,b){
+            return a+b;
+        }
+        let add4 = (a,b) => a+b;
+        console.log(add4(2,3));
+
+        //즉시실행함수
+        (function hello(){
+            console.log('hello');
+        })();
+    </script>
+</body>
+</html>

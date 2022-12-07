@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div{
+            width: 800px;
+            height: 500px;
+            background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <div></div>
+    <button onclick="background('pink')">핑크</button>
+    <button onclick="background('red')">레드</button>
+    <button onclick="background('blue')">블루</button>
+    <button onclick="background('green')">그린</button>
+    <button onclick="bgcolorView()">배경색상</button>
+    <script>
+        //1.버튼을 클릭할경우 div의 배경색을 변경
+        //* 자바스크립트로 스타일 변경
+        // object.style.background = "green"
+        function background(color){
+            document.querySelector('div').style.backgroundColor = color;
+        }
+        // div의 배경색상을 경고창에 출력
+        function bgcolorView(){
+            let div = document.querySelector('div');
+            let bgcolor = window.getComputedStyle(div).getPropertyValue('background-color'); //rgb 값으로 나타냄
+            //div.style.backgroundColor; //그냥 색깔나타남 스타일설정 값은 못받아오고 변경되는 값만 받아와짐
+            alert(bgcolor);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // // var str1;
+        // console.log(abc);
+        // var str = "green"; //undefind 변수를 선언햇지만 활당은 하지 않아서 뜨는 문구
+        // var str = "abc" ; //호이스팅(var에서만 나타나는 현상) 변수선언을 밑에 했어도 위에 있는것 처럼 뜸 변수선언만 올라가지 변수 값은 올라가지 않음
+        // let abc = "aaa" ;
+
+        //변수의 유효범위 스코프 {}블럭
+        //let은 블럭 스코프
+        //var는 함수 스코프
+        let abc = "aaa" ;
+        var str = "green"; 
+        //글로벌 변수
+        console.log(abc);
+        {
+            let aaa = 10;
+            var bbb = 20;
+            //지역변수
+        }
+        function myFunc(){
+            var ccc = 30;
+        }
+        console.log(ccc);
+        // //호이스팅 
+        // var str;
+        // console.log(str);
+        // let abc = "aaa" ;
+        // str = "green";
+
+
+        /*
+        변수
+        1.var : 함수 스코프 (블럭을 무시함, 함수는 무시못함)
+                           (변수의 선언부가 호이스팅 됨)
+        2.let : 블럭 스코프
+
+        3.const: 블럭 스코프
+                 활당후 값을 변경할 수 없음.
+                 선언시 활당해야함.
+
+        -글로벌변수
+         제일 최상단에 선언한 변수 코드 
+         어디서든 사용 가능
+        -지역변수(로컬변수)
+         {}안에 작성된 변수 
+         스코프 범위 안에서 사용가능
+        
+        const const1 = "aa"; /선언과 동신에 값을 입력후 변경불가능
+        
+        var str1 = "a";
+        var str1 = "b";  var는 같은 이름으로 여러번 선언가능
+        let str2 = "a";
+        let str2 = "b";  let은 같은 이름으로 여러번 선언불가능 에러발생
+        let userName = "green";
+        {
+            let userAge = 30;
+            console.log("블럭안에서 사용" + userName);
+            console.log("블럭안에서 사용" + userAge);
+            var number1 = 10;
+            let number3 = 50;
+        }
+        function myFunc(){
+            var number2 = 20; //여기서 만든 var는 지역변수로 됨
+        }
+        console.log("바깥에서 사용" + userName);
+        console.log("바깥에서 사용" + userAge); //오류가 발생
+        console.log("바깥에서 사용" + number1);
+        console.log("바깥에서 사용" + number2); //오류가 발생
+        */
+    </script>
+</body>
+</html>

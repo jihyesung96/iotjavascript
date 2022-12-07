@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+     
+        let lotto = [];
+        for(let i=1; i<=45;i++){
+            lotto.push(i);
+        }
+        console.log(lotto);
+        let lucky = [];
+        for(i=0 ; i <6 ;i++){
+            let num = Math.floor(Math.random()*lotto.length);
+            8
+            console.log(num);
+            lucky.push(lotto[num]);
+            //로또번호 저장
+            lotto.splice(num,1);
+            console.log(lotto);
+            console.log(lucky);
+        }
+
+        //배열에서 램덤숫자(배열) 빼고 나머지를 숫자중 또 램덤???  
+    </script>
+</body>
+</html>

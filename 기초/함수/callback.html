@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function randomQuiz( answer, printyes , printno){
+            if(answer == "green"){
+                printyes();
+            }else{
+                printno();
+            }     
+
+        };
+        let printYes = function(){
+            console.log("yes")
+        }
+        let printNo = function(){
+            console.log("no")
+        }
+        randomQuiz("green", printYes , printNo);
+    </script>
+    <!-- 다른 함수의 매개변수로 함수를 전달하고, 어떤 이벤트(함수)가 발생한 후에 매개변수로 전달한 함수가 다시 호출되는 것 -->
+</body>
+</html>

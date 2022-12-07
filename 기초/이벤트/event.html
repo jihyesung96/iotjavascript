@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h1>green</h1>
+        <ul>
+            <li onmouseenter="backYellow()" onmouseleave="backRed()">list1</li>
+            <li>list2</li>
+            <li>list3</li>
+            <li>list4</li>
+        </ul>
+    </div>
+    <script>
+        function backYellow(){
+            document.querySelector("div").style.backgroundColor = "yellow"
+        }
+        function backRed(){
+            document.querySelector("div").style.backgroundColor = "red"
+        }
+        //표준 이벤트 연결자
+        //object.addEventListener('이벤트',함수)
+        let li2 = document.querySelector("li:nth-child(2)");
+        let isPink = 1;
+        li2.addEventListener('click',function(){
+            if(isPink){
+                li2.style.background = "pink";
+                isPink = 0;
+            }else{
+                li2.style.background = "blue";
+                isPink = 1;
+            }
+            // isPink = !isPink;
+            console.log(isPink);
+        })//콜뱅? 콜백?
+    </script>
+</body>
+</html>

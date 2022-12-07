@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        canvas{
+            background-color: #eee;
+        }
+        .color-btn{
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 0;
+            outline: 0;
+        }
+        .color-btn[data-value="red"]{
+            background-color: red;
+        }
+        .color-btn[data-value="pink"]{
+            background-color: pink;
+        }
+        .color-btn[data-value="green"]{
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas" width="1000" height="500"></canvas>
+    <div>
+        <button class="color-btn" data-type="color" data-value="red"></button>
+        <button class="color-btn" data-type="color" data-value="pink"></button>
+        <button class="color-btn" data-type="color" data-value="green"></button>
+        <button class="clearbtn">지우기</button>
+    <div>
+    
+    <script>
+        const canvas = document.querySelector("#canvas");
+        const ctx = canvas.getContext("2d");
+        const btnDiv = document.querySelector("div")
+        const clearbtn =document.querySelector(".clearbtn")
+        let drawingMode; //true 일때만 그리기
+        ctx.lineWidth = 30;
+        ctx.lineCap = "round";
+        ctx.strokeStyle = "red";
+
+        function downHandler(){ //마우스 누르면 true
+            drawingMode = true;
+        }
+
+        function upHandler(){  //마우스 떼면 false
+            drawingMode = false;
+        }
+        function moveHandler(e){
+            if(!drawingMode) return;
+            let x = e.pageX;
+            let y = e.pageY;
+            ctx.beginPath();
+            ctx.moveTo(x,y);
+            ctx.lineTo(x,y);
+            ctx.stroke();
+        }
+        //색상변경
+        function setColor(e){
+            let colorVal = e.target.dataset.value;
+            ctx.strokeStyle = colorVal
+        }
+        canvas.addEventListener("mousedown", downHandler);
+        canvas.addEventListener("mouseup", upHandler);
+        canvas.addEventListener("mousemove",moveHandler)
+        btnDiv.addEventListener("click",setColor);
+        clearbtn.addEventListener("click",function(){
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+        })
+    </script>
+</body>
+</html>

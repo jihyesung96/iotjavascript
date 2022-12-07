@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{margin: 0; padding: 0; box-sizing: border-box;}
+        #top{
+            background-color: blueviolet;
+            position: relative;
+            height: 80px;
+        }
+        #mo{
+            position: absolute;
+            left: 20px;
+            top: 10px;
+            height: 60px;
+            width: 60px;
+            background-color: aqua;
+        }
+        #close{
+            height: 60px;
+            width: 60px;
+            background-color: aqua;
+            display: none;
+            margin-left: 210px;
+            margin-top: 10px;
+        }
+        #close.block{
+            display: block;
+        }
+        #tep{
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            background-color: lightcoral;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        #tep.on{
+            width: 15%;
+        }
+        ul{
+            display: none;
+            width: 100%;
+        }
+        li{
+            height: 20px;
+        }
+        ul.open{
+            display: block;
+        }
+        #menu{
+            width: 100%;
+            height: 30px;
+
+            margin-top: 20px;
+            display: none;
+        }
+        #menu.tt{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div id="top">
+        <div id="mo"></div>
+    </div>
+    <div id="tep">
+        <div id="close"></div>
+        <div id="menu">메뉴</div>
+        <ul>
+            <li>서브메뉴</li>
+            <li>서브메뉴</li>
+            <li>서브메뉴</li>
+            <li>서브메뉴</li>
+        </ul>
+        <div id="menu">메뉴2</div>
+        <ul>
+            <li>서브메뉴</li>
+            <li>서브메뉴</li>
+            <li>서브메뉴</li>
+            <li>서브메뉴</li>
+        </ul>
+        <div id="menu">메뉴3</div>
+        <ul>
+            <li>서브메뉴</li>
+            <li>서브메뉴</li>
+            <li>서브메뉴</li>
+            <li>서브메뉴</li>
+        </ul>
+        <div id="menu">메뉴4</div>
+        <ul>
+            <li>서브메뉴</li>
+            <li>서브메뉴</li>
+            <li>서브메뉴</li>
+            <li>서브메뉴</li>
+        </ul>
+    </div>
+    <script>
+        let div = document.querySelector("#mo");
+        div.addEventListener('click',function(e){
+            document.querySelector("#tep").classList.toggle("on");
+            document.querySelector("#close").classList.toggle("block");
+            document.querySelector("#menu").classList.toggle("tt");
+        })
+        let div1 = document.querySelector("#close");
+        div1.addEventListener('click',function(e){
+            document.querySelector("#tep").classList.toggle("on");
+            document.querySelector("#close").classList.remove("block");
+            document.querySelector("#menu").classList.remove("tt");
+            document.querySelector("ul").classList.remove("open");
+        })
+        let div2 = document.querySelector("#menu");
+        div2.addEventListener('click',function(e){
+            document.querySelector("ul").classList.toggle("open");
+        })
+    </script>
+</body>
+</html>

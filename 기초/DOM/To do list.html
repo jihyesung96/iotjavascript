@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        button{
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <p>To do list</p>
+        <input type="text" name="" id="" value="text">
+        <button></button>
+    </div>
+    <ul id="box1">
+
+    </ul>
+</body>
+<script>
+    const button = document.querySelector("button")  //변수button에 html버튼을 선택
+    let ul =document.querySelector("#box1") //변수ul에 html ul을 선택
+    button.addEventListener("click",function(e){  //버튼에 onclick 이벤트 설정
+        let tempInput = document.querySelector("input"); //변수tempInput에 htmlinput을 선택
+        const li = document.createElement('li'); //변수li에 html li추가기능을 저장
+        li.innerHTML = `${tempInput.value}<button id="de"></button>` //li에 글자를 변수tempInput.value로 불러오기
+        ul.append(li); //ul자식요소 마지막에 li를 생성
+    })
+    const button1 = document.querySelector("#de")
+    button1.addEventListener("click",function(e){
+        removeDiv(li);
+    })
+    function removeDiv(){
+            li.remove();
+        }
+</script>
+</html>

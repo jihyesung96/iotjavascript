@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //"3+4" => 7 문자열 입력시 계산된 결과를 리턴
+        function solution(my_string) {
+            var answer = 0;
+            // my_string = my_string.trim()
+            // if(my_string.indexOf("+")>0){
+            //     console.log("+있습니다.");
+            //     let arr = my_string.split(" + ");
+            //     console.log(arr);
+            //     answer = +arr[0] + +arr[1];
+            // }
+            // if(my_string.indexOf("-")>0){
+            //     console.log("-있습니다.");
+            //     let arr = my_string.split(" - ");
+            //     console.log(arr);
+            //     answer = +arr[0] - +arr[1];
+            // }
+            
+            let a =eval(my_string)
+
+
+
+            return answer;
+            }
+            let result = solution("10 - 4");
+            console.log(result);
+    </script>
+</body>
+</html>

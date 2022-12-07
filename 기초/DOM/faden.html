@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        body{
+            width: 100%;
+            height: 100vh;
+        }
+        @keyframes fadein{
+            0%{ opacity: 0.4;}
+            100%{ opacity: 1;}
+        }
+        .fadeImg{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+            animation: fadein 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <div class="fadeImg"><img src="./image/img_lights1.jpg" alt=""></div>
+    <div class="fadeImg"><img src="./image/img_lights2.jpg" alt=""></div>
+    <div class="fadeImg"><img src="./image/img_lights3.jpg" alt=""></div>
+    <div class="fadeImg"><img src="./image/img_lights4.jpg" alt=""></div>
+</body>
+<script>
+    let imgDivs = document.querySelectorAll(".fadeImg");
+    let indexNum = 0;
+    let nextNum;
+    imgDivs.forEach(div => div.style.display="none");
+    imgDivs[0].style.display = "block";
+    setInterval(function(){
+        nextNum = (indexNum+1) % 4;
+        /*
+        3초뒤
+        indexNum = 0;
+        nextNum = 1
+        0번째 div 눈끄기
+        1번재 div 눈켜기
+        3초뒤
+        indexNum = 1
+        nextNum = 2 
+        1번째 div 눈끄기
+        2번째 div 눈켜기
+        3초뒤
+        indexNum = 2
+        nextNum = 3
+        2번째 div 눈끄기
+        3번째 div 눈켜기
+        3초뒤
+        indexNum = 3
+        nextNum = 0
+        3번째 div 눈끄기
+        0번째 div 눈켜기
+        */
+        imgDivs[indexNum].style.display = "none";
+        imgDivs[nextNum].style.display = "block";
+        indexNum =nextNum;
+    },3000)
+</script>
+</html>

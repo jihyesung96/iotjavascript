@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{margin: 0; padding: 0; box-sizing: border-box;}
+        li{list-style: none;}
+        body{
+            width: 100%;
+            max-width: 1100px;
+            margin: 20px auto;
+        }
+        section{
+            width: 80%;
+            height: 460px;
+            color: #fff ;
+            
+        }
+        section:nth-child(1){
+            background-color: orange;
+        }
+        .count{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px 0;
+        }
+        .count div{
+            background-color: black;
+            width: 100px;
+            height: 50px;
+            text-align: center;
+            line-height: 50px;
+        }
+        .score ul{
+            display: flex;
+            justify-content: center;
+        }
+        .score ul li{
+            width: 200px;
+            height: 200px;
+            border: 1px solid #fff;
+        }
+        .score ul li:nth-child(1){
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .score ul li:nth-child(1) div{
+            background-color: black;
+            width: 100px;
+            height: 50px;
+            margin-top: 10px;
+            text-align: center;
+            line-height: 50px;
+        }
+        .score ul li:nth-child(2){
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .score ul li:nth-child(2) div{
+            background-color: black;
+            width: 100px;
+            height: 50px;
+            margin-top: 10px;
+            text-align: center;
+            line-height: 50px;
+        }
+        .text{
+            margin: 50px auto;
+            width: 70%;
+            height: 100px;
+            border: 1px solid #fff;
+            text-align: center;
+            line-height: 100px;
+        }
+
+
+        section:nth-child(2){
+            background-color: red;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+        .com{
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+        .com button{
+            width: 100px;
+            height: 50px;
+        }
+
+        .user{
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+        .user button{
+            width: 100px;
+            height: 50px;
+            margin: 1px 0;
+            
+        }
+    </style>
+</head>
+<body>
+    <!-- 농구게임 만들기
+    1.컴퓨터 먼저시작
+    2.슛횟수는 각각 15번
+    3.컴퓨터가 먼저 슛하기를 하면 3점슛과 2점슛중 50%의 확률로 랜덤하게 던질수 있다.
+    4.3점슛은 30%확률로 성고 2점슛은 50% 확률로 성공
+    5.결과는 텍스트로 표시
+    6.성골하면 컴퓨터의 점수를 더해준다.
+    7.컴퓨터 순서가 끝나면 사용자의 순서가 된다.
+    8.사용자는 2점슛 3점슛을 선택할수있다.
+    9.사용자는 2점슛 3점슛을 선택할수있다.
+    10.3점슛은 30%확률로 성고 2점슛은 50% 확률로 성공
+    11.결과는 텍스트로 표시
+    12.성골하면 사람의 점수를 더해준다.
+    13.사용자 턴이 끝나면 남은 슛 회수가 1씩 줄어든다.
+    14.남은 슛횟수가 0이 되면 누가 이겼는지 결과를 텍스트로 나타낸다. -->
+
+    <section>
+        <div class="count">
+            <p>남은 슛 횟수 </p>
+            <div class="countnum">15</div>
+        </div>
+        <div class="score">
+            <ul>
+                <li>
+                    컴퓨터
+                    <div class="comcou">0</div>
+                </li>
+                <li>
+                    사람
+                    <div class="usercou">0</div>
+                </li>
+            </ul>
+        </div>
+        <div class="text"></div>
+    </section>
+    <section>
+        <div class="com">
+            컴퓨터
+            <button class="sc1" onclick="buttonclick1();" >슛하기</button>
+        </div>
+        <div class="user">
+            사용자
+            <button class="sc2" onclick="buttonclick2();" disabled  >2점슛</button>
+            <button class="sc3" onclick="buttonclick3();" disabled>3점슛</button>
+        </div>
+    </section>
+
+
+
+    <script>
+        let time = 15;
+        let num = 0;
+        let comcount = 0;   
+        let usercount = 0;
+        //컴터 차례
+        function buttonclick1(){
+            let random = Math.random();
+            console.log(random)
+            if(random < 0.5){
+                let random1 = Math.random();
+                if(random1<0.5){
+                    comcount += 2;
+                    document.querySelector(".comcou").innerHTML = `${comcount}`
+                    document.querySelector(".text").innerHTML = "컴퓨터가 2점슛을 성공했습니다"
+                }
+                else{
+                    document.querySelector(".text").innerHTML = "컴퓨터가 2점슛을 실패했습니다"
+                }
+            }
+            else{
+                let random1 = Math.random();
+                if(random1<0.34){
+                    comcount += 3;
+                    document.querySelector(".comcou").innerHTML = `${comcount}`
+                    document.querySelector(".text").innerHTML = "컴퓨터가 3점슛을 성공했습니다"
+                }
+                else{
+                    document.querySelector(".text").innerHTML = "컴퓨터가 3점슛을 실패했습니다"
+                }
+            }
+            console.log(comcount);
+            document.querySelector(".sc2").disabled = false;
+            document.querySelector(".sc3").disabled = false;
+            document.querySelector(".sc1").disabled = true;
+            // 사용자 버튼 on 컴퓨터 버튼 off
+            }
+        //유저차례
+        function buttonclick2 (){
+            let random = Math.random();
+            console.log(random);
+            if(random<0.5){
+                    usercount += 2;
+                    document.querySelector(".usercou").innerHTML = `${usercount}`
+                    document.querySelector(".text").innerHTML = "유저가 2점슛을 성공했습니다"
+                }
+                else{
+                    document.querySelector(".text").innerHTML = "유저가 2점슛을 실패했습니다"
+                }
+                document.querySelector(".sc2").disabled = true;
+                document.querySelector(".sc3").disabled = true;
+                document.querySelector(".sc1").disabled = false;
+                num++;
+                document.querySelector(".countnum").innerHTML = `${time-num}`
+                if(time-num === 0){
+                document.querySelector(".sc2").disabled = true;
+                document.querySelector(".sc3").disabled = true;
+                document.querySelector(".sc1").disabled = true;
+                    if(usercount > comcount){
+                        document.querySelector(".text").innerHTML = "유저가 승리했습니다"
+                    }else if(usercount == comcount){
+                        document.querySelector(".text").innerHTML = "비겼습니다"
+                    }else{
+                        document.querySelector(".text").innerHTML = "컴퓨터가 승리했습니다"
+                    }
+                }
+            }
+        function buttonclick3 (){
+            let random = Math.random();
+            console.log(random);
+            if(random<0.34){
+                    usercount += 3;
+                    document.querySelector(".usercou").innerHTML = `${usercount}`
+                    document.querySelector(".text").innerHTML = "유저가 3점슛을 성공했습니다"
+                }
+                else{
+                    document.querySelector(".text").innerHTML = "유저가 3점슛을 실패했습니다"
+                }
+                document.querySelector(".sc2").disabled = true;
+                document.querySelector(".sc3").disabled = true;
+                document.querySelector(".sc1").disabled = false;
+                //컴퓨터 버튼 on 사용자버튼 off
+                num++;
+                console.log(num)
+                document.querySelector(".countnum").innerHTML = `${time-num}`
+                if(time-num === 0){
+                    document.querySelector(".sc2").disabled = true;
+                    document.querySelector(".sc3").disabled = true;
+                    document.querySelector(".sc1").disabled = true;
+                    if(usercount > comcount){
+                        document.querySelector(".text").innerHTML = "유저가 승리했습니다"
+                    }else if(usercount == comcount){
+                        document.querySelector(".text").innerHTML = "비겼습니다"
+                    }else{
+                        document.querySelector(".text").innerHTML = "컴퓨터가 승리했습니다"
+                    }
+                }
+            }
+
+        
+
+        
+        
+        
+
+
+
+
+
+    </script>
+
+</body>
+</html>

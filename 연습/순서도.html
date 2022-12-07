@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // let NumList = [1,5,8,7,6,4];
+        // let maxNum;
+        // maxNum =  NumList[0];
+        // for(i=1 ; i < NumList.length; i++){
+        //     if(maxNum<NumList[i]){
+        //         maxNum = NumList[i];
+        //     }
+        // }
+        // console.log(maxNum);
+
+        let NumList = [];
+        for(let i = 0 ; i < 10; i++){
+            let randNum = Math.floor(Math.random()*100)+1;
+            NumList.push(randNum);
+        }
+        console.log(NumList);
+        let maxNum = NumList[0];
+        for(let i=1; i<NumList.length; i++){
+            // if(maxNum<NumList[i]){
+            //     maxNum = NumList[i];
+            // }
+            maxNum = NumList[i] > maxNum ? NumList[i] : maxNum;
+        }
+        console.log(maxNum);
+    </script>
+</body>
+</html>

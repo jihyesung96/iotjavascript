@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="content">
+        <h1>첫번째 자식</h1>   
+        <h2>두번째 자식</h2>  
+    </div>
+    <ul>
+        <li>list1</li>
+        <li>list2</li>
+        <li>list3</li>
+        <li>list4</li>
+    </ul>
+    <script>
+        //id가 content인 div 선택하기
+        const content = document.getElementById("content");
+        const ul = document.querySelector("ul");
+        //요소노드 생성하기 <p></p>
+        let p = document.createElement("p"); //어떤 태그를 만들때 사용 createElement(만들 태그 입력)
+        let textnode = document.createTextNode("화요일");//어떤 내용을 추가할때 사용 createTextNode(추가할 내용)
+        //텍스트 노드를 요소노드의 자식으로 추가하기
+        p.appendChild(textnode);//<p>화요일</p>
+        //p요소노드는 content요소의 자식노드로 추가
+        //content.appendChild(p);
+        //content 요소노드의 첫번재 자식 요소노드
+        content.insertBefore(p,content.lastElementChild) //firstElementChild:자식요소의 첫번째 lastElementChild
+        
+        
+        let newLi = document.createElement("li")
+        newLi.innerHTML = "새로운 리스트 </br> 안녕하세요";
+        ul.insertBefore(newLi, ul.children[2]);
+
+    </script>
+</body>
+</html>

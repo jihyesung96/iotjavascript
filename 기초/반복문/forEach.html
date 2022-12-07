@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        <li>list1</li>
+        <li>list2</li>
+        <li>list3</li>
+        <li>list4</li>
+    </ul>
+    <script>
+        let arr1 = ["🍕","🍔","🍟","🌭","🍿"];
+        // console.log(arr1[0]);
+        // console.log(arr1[1]);
+        // console.log(arr1[2]);
+        // console.log(arr1[3]);
+        // console.log(arr1[4]);
+
+        // for(let i =0; i < arr1.length ; i++ ){
+        //     console.log(arr1[i]);
+        // }
+
+        // for of문
+        // for 변수선언 of 배열 : 배열의값들이 변수에 담긴다. 
+        // for( let v of arr1){
+        //     console.log(v);
+        // }
+
+        // arr1.forEach( function(i,v,arr){   //함수 (첫번째 자리 : 배열의값 두번째 자리: 인텍스의 값 세번째 자리 : 배열의 자신이 담김)
+        //      console.log(i); 
+        //      console.log(v);
+        //      console.log(arr)
+        //     })
+        // //화살표 함수로 변경
+        // arr1.forEach( (i,v,arr) => {   
+        //     console.log(i); 
+        //     console.log(v);
+        //     console.log(arr)
+        // })
+        // arr1.forEach( i => console.log(i))
+
+
+        // let lis = document.querySelectorAll("li");
+        // console.log(lis);
+        // // for( let i = 0 ; i<lis.length; i++ ){
+        // //     lis[i].style.background ="yellow"
+        // // }
+        // lis.forEach(function(li,index){li.innerHTML ="red"+ index });
+        // lis.forEach(li => li.style.background ="red")
+        let 혜성 = [혜,성,이,는,착,하,다]
+        let bebe =[]
+        let 정말= []
+        혜성.forEach((c,q)=>{
+        if(c === "사","랑","해"){
+        bebe .push(c);
+        }else{
+        정말.push(c);
+        }
+        })
+        console.log(bebe)
+        console.log(정말)
+    </script>
+</body>
+</html>

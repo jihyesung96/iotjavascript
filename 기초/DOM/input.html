@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="username" value="수요일">
+    <button onclick="inputPrint()">클릭</button>
+    <ul>
+        <li >list1
+            <span>span</span>
+        </li>
+        <li >list2
+            <span>span</span>
+        </li>
+        <li >list3
+            <span>span</span>
+        </li>
+        <li >list4
+            <span>span</span>
+        </li>
+    </ul>
+    <div id="box01"><h1>안녕하세요</h1></div>
+    <script>
+        const input = document.querySelector("#username")
+        console.log(input);
+        function inputPrint(){
+            input.value = "";
+        }
+        //previousElement
+        //parentElement
+        // function liClick(aa){
+        //     console.log(aa.parentElement);    
+        // }
+        const ul = document.querySelector("ul") 
+        ul.addEventListener("click",function(e){ //이벤트는 부모한데 설정
+            console.log(e);
+            let li = e.target.parentElement;  //이벤트에 타겟을 사용해서 누구한데 사용됬는지 알수있다
+            console.log(li);
+        })
+        console.log(box01.innerHTML);
+        box01.innerText = "<h2>즐거운 수요일</h2>";
+        ul.append("곧 쉬는시간");
+        const li = document.createElement('li');
+        li.innerHTML = "새로운<span>li</span>입니다"
+        ul.prepend(li);
+    </script>
+</body>
+</html>

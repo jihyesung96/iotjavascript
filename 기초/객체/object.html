@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let obj1 = {};
+        let obj2 = new Object();
+        obj1.name = "green";
+        obj1.age = 30;
+        obj2.name = "blue";
+        obj2.age = 26;
+        console.log(obj1);
+        console.log(typeof(obj2));
+        let arr = [1,2,3];
+        console.log(typeof(arr));
+
+        let obj3 = {
+            name: "pink",//property 사이엔 ,로 표시
+            age: 30,
+        }
+        console.log(obj3["name"])
+
+        function print(name,age){
+            console.log(name);
+            console.log(age);
+        }
+        print("aaa",20);
+        function printobj(obj1){
+            console.log(obj1.name);
+            console.log(obj1.age);
+        }
+
+        printobj(obj3);
+        obj3.hasJob = true ; //객체를 완성후 추가 시킬때 사용
+        console.log(obj3)
+
+
+        //property 삭제
+        //delete obj.key
+        delete obj3.hasJob;
+        console.log(obj3);
+
+        /*
+        let student1 = {
+            name: "수민",
+            age: 22,
+            tel: "010-1234-5678"
+        }
+        let student2 = {
+            name: "재훈",
+            age: 32,
+            tel: "010-5555-1234"
+        }*/
+
+        //생성자 함수 함수명은 첫글짜는 대문자로 시작 
+        function Person(name, age, tel) {
+            //this = {}; 빈 객체 생략
+            this.name = name;
+            this.age = age;
+            this.tel = tel; 
+            //return this; 리턴 생략
+        }
+        let student1 = new Person("수민",22,"010-1234-1234");
+        let student2 = new Person("재훈",32,"010-1111-2222");
+        console.log(student1);
+        console.log(student2);
+
+        function makePerson(name,age){
+            return{
+                name, //a는 문자열 문자열이랑 같은면 생략 가능 
+                age
+            }
+        }
+        let student3 = makePerson("재원",27);
+        console.log(student3);
+
+        //in 연산자 해당하는 object(객체)에 키가 있는지
+        console.log("name" in student1);
+        console.log("hasJob" in student1);
+
+        //for in문
+        let arr2 = ["a","b","c","d","e"];
+        for(let i of arr2){
+            console.log(i);
+        }
+        for (let key in student1){
+            console.log(student1[key]); //계산된 변수를 넣을땐 대괄호를 써서 쓴다.
+        }
+
+    </script>
+</body>
+</html>

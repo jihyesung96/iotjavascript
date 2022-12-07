@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body>
+    <div></div>
+    <script>
+        let text = ""
+        // for(let i = 1 ; i<101 ; i++ ){
+        //     if(i%3 ===  0 && i%5 === 0){
+        //         console.log("fizzbuzz")
+        //         text += "<h1>fizzbuzz</h1>"
+        //     }else if(i%5 === 0){
+        //         console.log("buzz")
+        //         text += "<h1>buzz</h1>"
+        //     }else if(i%3 ===  0){
+        //         console.log("fizz")
+        //         text += "<h1>fizz</h1>"
+        //     }else{
+        //         console.log(i)
+        //         text += `<h1>${i}</h1>`
+        //     }
+        // }
+        // document.querySelector("div").innerHTML = text;
+
+        //1~100 까지 숫자를 출력
+        //3과5로 나누어 떨어지는 수는 숫자 대신 fizzbuzz 출력
+        //3으로 나누어 떨어지면 숫자대신 fizz를 출력
+        //5로 나누어 떨어지면 숫자대신 buzz를 출력
+        for(let i = 1; i<=100; i++){
+            if(i%5 == 0 && i %3 == 0){
+                console.log("fizzbuzz");
+            }else if ( i % 5 == 0){
+                console.log("buzz")
+            }else if ( i % 3 == 0){
+                console.log("fizz")
+            }else{
+                console.log(i)
+            }
+        }
+    </script>
+</body>
+</html>
