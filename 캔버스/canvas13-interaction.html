@@ -18,6 +18,8 @@
         const canvas =document.querySelector("#canvas")
         const context = canvas.getContext("2d")
         let boxes = [];
+        let animation;
+        let selectBox;
         //글자 두께 크기 서체 지정
         context.font = "bold 24px sans-serif";
         class Box {
@@ -41,6 +43,23 @@
                 context.fillText(this.index, this.x+40, this.y+40);
             }
         }
+        let panel = {
+            x: 200,
+            y: 200,
+            width : 300,
+            height : 300,
+            draw(){
+                //면색변경
+                context.fillStyle = "rgba(255,0,0,0.5)";
+                //사각형 그리기
+                context.fillRect(this.x,this.y,this.width,this.height);
+                //글자색 변경
+                context.fillStyle = "#fff";
+                //글자 작성 fillText("내용",x,y)
+                context.fillText("클릭했어", this.x+100, this.y+100);
+            }
+        }
+        let panelView = false;
         //box 객체 생성해서 배열에 넣기
         let tempX, tempY, tempSpeed;
         for(let i=0; i<10; i++){
@@ -62,7 +81,13 @@
                 }
                 box.draw();
             })
-            requestAnimationFrame(boxMove)
+            animation = requestAnimationFrame(boxMove);
+            if(panelView){
+                panel.draw();
+            }
+            if(selectBox){
+                cancelAnimationFrame(animation)
+            }
         }
         boxMove();
         canvas.addEventListener("click", (e)=>{
@@ -72,10 +97,14 @@
                 if(mousePosX >= box.x 
                 && mousePosX < box.x+100
                 && mousePosY-86 >= box.y 
-                && mousePosY-86 < box.y+100){
+                && mousePosY-86 < box.y+100
+                ){
                     console.log(box.index)
+                    selectBox = box;
+                    panelView = true;
                 }
             })
+            
         })
     </script>
 </body>

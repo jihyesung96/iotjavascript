@@ -22,9 +22,7 @@
     <div>
     <canvas id="myCanvas" width="800" height="400"></canvas>
     </div>
-    <div>
-    <button class="startBtn" onclick="startGame()">start</button>  
-    </div>
+
 
     <script>
         const canvas = document.querySelector("#myCanvas")
@@ -34,35 +32,43 @@
         let BALL_RADIUS = 10;
         let COLOR = "green";
         let timer = 0;
+        //공 이동
+        let sx, xy;
+        sx = 100;
+        sy = 100;
+        //경과 시간
+        let oldTime;
+        let startTime;
+        let totalTime;
+        //키 눌림
+        let keyPressed = [];
+        //게임 시작 상태
+        let STATE_WAIT = 0;
+        let STATE_RUN = 1 ;
+        let STATE_GAMEOVER = 2 ;
+        let state = STATE_WAIT;
 
 
-        //공 만들기
-        // class ball{
-        //     constructor(x, y, radius, speed, angle, color){
-        //         this.x = x;
-        //         this.y = y;
-        //         this.radius = radius;
-        //         this.speed = speed;
-        //         this.setangle(angle);
-        //         this.color = color;
-        //     }
-        //     moveLeft(wallLeft) {
-        //     this.x -= this.speed;
-        //     if (this.x < wallLeft) this.x = wallLeft;
-        //     }
-        //     moveRight(wallRight) {
-        //     this.x += this.speed;
-        //     if (this.x + this.width > wallRight) this.x = wallRight - this.width;
-        //     }
+        window.addEventListener("load",function(){
+            setInterval(startGame,300);
+        })
 
-        //     draw(){
-        //     ctx.beginPath();
-        //     ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        //     ctx.fillStyle = this.color;
-        //     ctx.fill(); 
-        //     ctx.closePath();
-        //     }
-        // }
+        //키를 누르면 해당 키코드 index에 true를 지정
+        window.addEventListener("keydown",function(e){
+            keyPressed[e.keyCode] = true;
+            console.log(e.keyCode);
+        })
+        //키를 때면 해당 키코드에 index에 false를 지정
+        window.addEventListener("keyup",function(e){
+            keyPressed[e.keyCode] = false;
+        })
+
+        function ball(){
+            ctx.beginPath();
+            ctx.arc(sx,sy,10,0,2*Math.PI);
+            ctx.fillStyle= "blue";
+            ctx.fill();
+        }
         //발판 배열
         let boxes = [];
         //발판 클래스
@@ -106,22 +112,87 @@
                 //충돌하는지 확인
                 // crachCheck(gameU, item)
             })
-            // ball.draw();
+            ball();
         }
-        startFrame();
-        //방향키 이동 이벤트 함수
-        canvas.addEventListener("keydown", function(e) {
-            if (e.code == "ArrowLeft") keys.left = true;
-            if (e.code == "ArrowRight") keys.right = true;
-            if (e.code != "F5") ev.preventDefault();
-        });
-    
-        canvas.addEventListener("keyup", function(e) {
-            if (e.code == "ArrowLeft") keys.left = false;
-            if (e.code == "ArrowRight") keys.right = false;
-            if (e.code != "F5") ev.preventDefault();
-        })
-            
+        
+        
+        
+
+        // function crachCheck(ball, item){
+        //     let xoff = item.x - (user.x+user.width);
+        //     let yoff = item.y - (user.y+user.height/2);
+        //     if(xoff <= 0 && yoff <= 0){
+        //         console.log("충돌");
+        //         cancelAnimationFrame(animation)
+        //     }
+        // }
+
+
+        //문자열 출력 함수
+        function drawText(ctx, text, x, y, font, color, align, base){
+            if(font) ctx.font = font;
+            if(color) ctx.fillStyle = color;
+            if(align) ctx.textAlign = align;
+            if(base) ctx.textBaseline = base;
+            ctx.fillText(text,x,y)
+        }
+
+        //현재시간 구하는 함수
+        function getTime(){
+            let date = new Date();
+            let time = date.getTime();
+            return time;
+        }
+
+       
+
+        //게임 함수
+        function startGame(){
+            switch(state){
+                case STATE_WAIT:
+                    if(keyPressed[13] == true){
+                        state = STATE_RUN;
+                        startFrame();
+                    }
+                case STATE_RUN:
+                    if(keyPressed[37] == true){
+                        sx -= 20 ;
+                        angle = 270;
+                    }
+                    if(keyPressed[39] == true){
+                        sx += 20 ;
+                        angle = 0;
+                    }
+                    let ellapse = getTime() - oldTime;
+                    oldTime = getTime();
+                case STATE_GAMEOVER:
+            }
+            draw();
+        }
+        
+         //게임과정
+         function draw(){
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            switch(state){
+                case STATE_WAIT:
+                    drawText(ctx, "Enter 키를 누르면 공이 움직이기 시작합니다",
+                    canvas.width-230, canvas.height/2 -20, "20px arial", "black")
+                case STATE_RUN:
+                    
+                case STATE_GAMEOVER:
+                    if(state==STATE_GAMEOVER){
+                            drawText(ctx,"GAME OVER", canvas.width/2, canvas.height/2,
+                            "30px arial", "black", "center", "middle");
+                        }else{
+                            //경과시간 갱신
+                            totalTime = ( getTime() - startTime) / 1000;
+                        }
+                        //경과 시간 표시
+                        drawText(ctx, totalTime , canvas.width-10,10,
+                        "20px arial", "black", "right","top");
+                        break;
+            }
+        }
     </script>
 </body>
 </html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>운석 피하기 게임</h1>
+    <canvas width="1000" height="800" style="background: black"></canvas>
+    <script>
+        let canvas, ctx;
+        //게임의 상태
+        let STATE_WAIT = 0;
+        let STATE_RUN = 1;
+        let STATE_GAMEOVER = 2;
+        let state = STATE_WAIT;
+        //우주선
+        let spaceShip;
+        let sx, xy;
+        let SW = 13, SH = 16;
+        let angle = 0;
+        //운석
+        let arMete = new Array();
+        let meteColor = ["yellow", "lightgreen", "gray","blue", "orange"];
+        let NUM = 20;
+
+        //키눌림 상태
+        let keyPressed = [];
+        //경과 시간
+        let oldTime;
+        let startTime;
+        let totalTime;
+
+        window.addEventListener("load", function(){//윈도우가 다 불러왔을때 실행시켜라
+            canvas = document.querySelector("canvas")
+            ctx = canvas.getContext("2d");
+            spaceShip = new Image();
+            spaceShip.src = "./spaceship.png"
+            //게임 진행 함수 호출
+            setInterval(runGame, 30);
+        })
+        //키를 누르면 해당 키코드에 키에 true를 지정
+        window.addEventListener("keydown", function(e){
+            keyPressed[e.keyCode] = true;
+            console.log(e.keyCode);
+
+        })
+        //키를 때면 해당 키코드 index에 false를 지정
+        window.addEventListener("keyup", function(e){
+            keyPressed[e.keyCode] = false;
+            console.log(keyPressed);
+        })
+        //현재 시간 구하는 함수
+        function getTime(){
+            let date = new Date();
+            let time = date.getTime();
+            return time;
+        }
+        //게임시작 운석 배치하고 시간을 리셋
+        function startGame(){
+            arMete.length = 0;
+            for(let i = 0; i < NUM; i ++) {
+                arMete.push({
+                    x:Math.random() * canvas.width,
+                    y: (i < NUM/2 ? 20: canvas.height - 20),
+                    vx: Math.random() * 200 - 100,
+                    vy: Math.random() * 200 - 100,
+                    color: Math.floor(Math.random() * 5)
+                })
+            }
+            sx = canvas.width/2;
+            sy = canvas.height/2;
+            startTime = getTime();
+            oldTime = getTime();
+        }
+        //게임진행 함수
+        function runGame(){
+            console.log(state);
+            switch(state){
+                case STATE_WAIT:
+                case STATE_GAMEOVER:
+                    //엔터키를 눌렀을때
+                    if(keyPressed[13] == true) {
+                        if(spaceShip.complete = false) return;
+                        startGame();
+                        state = STATE_RUN;
+                    }
+                    break; 
+                case STATE_RUN:
+                    //우주선 이동
+                    if(keyPressed[37]){ //left
+                        sx -= 3;
+                        angle = 270;
+                    }
+                    if(keyPressed[38]){ //up
+                        sy -= 3;
+                        angle = 0;
+                    } 
+                    if(keyPressed[39]){ //right
+                        sx += 3;
+                        angle = 90;
+                    } 
+                    if(keyPressed[40]){ //down
+                        sy += 3;
+                        angle = 180;
+                    } 
+                    //대각선 이동
+                    //위, 오른쪽
+                    if(keyPressed[38] && keyPressed[39]) {
+                        angle = 45;
+                    }
+                    //아래 오른쪽
+                    if(keyPressed[39] && keyPressed[40]) {
+                        angle = 135;
+                    }
+                    //아래, 왼쪽
+                    if(keyPressed[40] && keyPressed[37]) {
+                        angle = 228;
+                    }
+                    //위, 왼쪽
+                    if(keyPressed[37] && keyPressed[38]) {
+                        angle = 315;
+                    }  
+                    //경과 시간 구하기
+                    let ellapse = getTime() - oldTime;
+                    oldTime = getTime();
+                    //운석의 이동
+                    for(ar of arMete) {
+                   
+                        let mx = ar.vx * ellapse /1000;
+                        let my = ar.vy * ellapse/1000;
+                        ar.x += mx;
+                        ar.y += my;
+                        if(ar.x > canvas.width) ar.x = 0;
+                        if(ar.x < 0) ar.x = canvas.width;
+                        if(ar.y > canvas.height) ar.y = 0;
+                        if(ar.y < 0) ar.y = canvas.height;
+                        //충돌 판정
+                        let mx2 = ar.x;
+                        let my2 = ar.y;
+                        if(mx2 > sx -SW/2 && mx2 < sx + SW/2
+                        && my2 > sy-SH/2 && my < sy + SH/2
+                        ) {
+                            state =STATE_GAMEOVER;
+                            break;  
+                        }
+                    }
+                    break;
+            }
+            draw();
+        }
+        //문자열 출력함수
+        function drawText(ctx, text, x, y, font, color, align, base) {
+            if(font) ctx.font = font;
+            if(color) ctx.fillStyle = color;
+            if(align) ctx.textAlign = align;
+            if(base) ctx.textBaseline = base;
+            ctx.fillText(text, x, y);
+            
+        }
+        //그리는 함수
+        function draw(){
+            ctx.clearRect(0,0,canvas.width, canvas.height);
+            switch(state) {
+                case STATE_WAIT:
+                    drawText(ctx, "Space", canvas.width/2, canvas.height/2 - 60, 
+                    "30px arial", "yellow", "center", "middle");
+                    drawText(ctx, "Enter: Start, CursorKey: Move spaceShip",
+                    canvas.width/2, canvas.height/2-20, "20px arial", "white")
+                    drawText(ctx, "운석피하기게임입니다", canvas.width/2,
+                    canvas.height/2 +20, "15px arial", "blue");
+                    break;
+                case STATE_RUN:
+                case STATE_GAMEOVER:
+                    //운석 그림
+                    arMete.forEach(ar=>{
+                        ctx.beginPath();
+                        ctx.arc(ar.x, ar.y, 2, 0, 2 * Math.PI);
+                        ctx.fillStyle = meteColor[ar.color];
+                        ctx.fill();
+                    })
+                    //우주선 그림
+                    ctx.save();
+                    ctx.translate(sx, sy);
+                    ctx.rotate(angle * Math.PI/180);
+                    ctx.translate(-sx, -sy);
+                    ctx.drawImage(spaceShip, sx-SW/2, sy-SH/2);
+                    ctx.restore();
+                    
+                    if(state == STATE_GAMEOVER) {
+                        drawText(ctx, "GAME OVER", canvas.width/2, canvas.height/2,
+                        "30px arial", "white", "center", "middle");
+                    }else {
+                        //경과시간 갱신
+                        totalTime = (getTime() - startTime) / 1000;
+                    }
+                    //경과시간 표시
+                    drawText(ctx, totalTime, canvas.width - 10, 10, "20px arial", "yellow", "right", "top");
+            }
+        }
+        
+    </script>
+</body>
+</html>
