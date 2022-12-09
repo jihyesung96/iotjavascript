@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <textarea name="" id="" cols="30" rows="10"></textarea>
+    <button>지우기</button>
+    <script>
+        const textArea = document.querySelector("textarea");
+        const btn = document.querySelector("button");
+        let str = "";
+        textArea.value = localStorage.getItem("textbox");
+        textArea.addEventListener("input",function(){
+            str=textArea.value;
+            localStorage.setItem("textbox",str)
+        })
+        btn.addEventListener("click",function(){
+            localStorage.removeItem("textbox");
+            textArea.value = "";
+        })
+    </script>
+</body>
+</html>

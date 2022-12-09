@@ -76,7 +76,6 @@
         
         //게임진행 함수
         function runGame(){
-
             switch(state){
                 case STATE_WAIT:
                 case STATE_GAMEOVER:
@@ -196,9 +195,9 @@
                         //경과시간 갱신
                         totalTime = ( getTime() - startTime) / 1000;
                     }
-                    //경과 시간 표시
-                    drawText(ctx, totalTime , canvas.width-10,10,
-                    "20px arial", "yellow", "right","top");
+                        //경과 시간 표시
+                        drawText(ctx, totalTime , canvas.width-10,10,
+                        "20px arial", "yellow", "right","top");
                     break;
             }
         }

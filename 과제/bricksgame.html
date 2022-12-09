@@ -63,6 +63,22 @@
             keyPressed[e.keyCode] = false;
         })
 
+        //문자열 출력 함수
+        function drawText(ctx, text, x, y, font, color, align, base){
+            if(font) ctx.font = font;
+            if(color) ctx.fillStyle = color;
+            if(align) ctx.textAlign = align;
+            if(base) ctx.textBaseline = base;
+            ctx.fillText(text,x,y)
+        }
+
+        //현재시간 구하는 함수
+        function getTime(){
+            let date = new Date();
+            let time = date.getTime();
+            return time;
+        }
+
         function ball(){
             ctx.beginPath();
             ctx.arc(sx,sy,10,0,2*Math.PI);
@@ -128,21 +144,7 @@
         // }
 
 
-        //문자열 출력 함수
-        function drawText(ctx, text, x, y, font, color, align, base){
-            if(font) ctx.font = font;
-            if(color) ctx.fillStyle = color;
-            if(align) ctx.textAlign = align;
-            if(base) ctx.textBaseline = base;
-            ctx.fillText(text,x,y)
-        }
-
-        //현재시간 구하는 함수
-        function getTime(){
-            let date = new Date();
-            let time = date.getTime();
-            return time;
-        }
+        
 
        
 
@@ -163,11 +165,25 @@
                         sx += 20 ;
                         angle = 0;
                     }
-                    let ellapse = getTime() - oldTime;
-                    oldTime = getTime();
+                    
+                    drawText(ctx, totalTime , canvas.width-10,10,
+                    "20px arial", "black", "right","top");
                 case STATE_GAMEOVER:
+                if(state==STATE_GAMEOVER){
+                            drawText(ctx,"GAME OVER", canvas.width/2, canvas.height/2,
+                            "30px arial", "black", "center", "middle");
+                        }else{
+                            //경과시간 갱신
+                            totalTime = ( getTime() - startTime) / 1000;
+                        }
+                //경과 시간 표시
+                // drawText(ctx, totalTime , canvas.width-10,10,
+                // "20px arial", "black", "right","top");
+                break;
+                
             }
-            draw();
+            
+            
         }
         
          //게임과정
@@ -180,17 +196,8 @@
                 case STATE_RUN:
                     
                 case STATE_GAMEOVER:
-                    if(state==STATE_GAMEOVER){
-                            drawText(ctx,"GAME OVER", canvas.width/2, canvas.height/2,
-                            "30px arial", "black", "center", "middle");
-                        }else{
-                            //경과시간 갱신
-                            totalTime = ( getTime() - startTime) / 1000;
-                        }
-                        //경과 시간 표시
-                        drawText(ctx, totalTime , canvas.width-10,10,
-                        "20px arial", "black", "right","top");
-                        break;
+                    drawText(ctx,"GAME OVER", canvas.width/2, canvas.height/2,
+                    "30px arial", "black", "center", "middle");
             }
         }
     </script>

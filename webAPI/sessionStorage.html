@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        sessionStorage.setItem("title","green");//닫으면 없어지는애 브라우져가 열여있을때만 유지됨
+        const users = [
+            {id:1, name:"green"},
+            {id:2, name :"bbb"}
+        ]
+        sessionStorage.setItem("users",JSON.stringify(users));
+        for(let key in sessionStorage){
+            if(sessionStorage.hasOwnProperty(key)){
+                document.write(`key는$` )
+            }
+        }
+    </script>
+</body>
+</html>

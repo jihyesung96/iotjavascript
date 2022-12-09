@@ -17,10 +17,10 @@
         //이미지 객체 생성
         const imgElem = new Image();
         imgElem.src = "img/hart.jpg";
-        imgElem.addEventListener("load",function(){
+        imgElem.addEventListener("load",function(){ // addEventListener(이벤트, 전달 함수, 이벤트 방식)
             for(let i = 0; i<4; i++){
                 for(let j = 0; j<3; j++){
-                    ctx.drawImage(imgElem, j*100, i*70 ,100 ,70);
+                    ctx.drawImage(imgElem, j*100, i*70 ,100 ,70);//drawImage(img,x,y,width,height)
                 }
             }
         })
